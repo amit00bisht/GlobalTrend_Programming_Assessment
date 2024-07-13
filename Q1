@@ -23,7 +23,7 @@ int main() {
     head->next = new ListNode(2);
     head->next->next = new ListNode(3);
 
-    ListNode* originalHead = head; // Store the original head
+    ListNode* originalHead = head; 
     std::cout << "Original list: ";
     while (head) {
         std::cout << head->val << " ";
@@ -31,7 +31,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    head = originalHead; // Reset head to the original head
+    head = originalHead;
     head = reverseList(head);
 
     std::cout << "Reversed list: ";
