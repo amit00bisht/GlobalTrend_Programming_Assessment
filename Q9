@@ -1,0 +1,16 @@
+ int maxDiff(vector<int>& nums) {
+        if (nums.empty()) {
+            return 0;
+        }
+        int minElement = nums[0];
+        int maxDiff = nums[0] - nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            if (nums[i] - minElement > maxDiff) {
+                maxDiff = nums[i] - minElement;
+            }
+            if (nums[i] < minElement) {
+                minElement = nums[i];
+            }
+        }
+        return maxDiff;
+}
