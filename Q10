@@ -1,0 +1,8 @@
+    bool isOnlyAlpha(string s) {
+        for (char c : s) {
+            if (!isalpha(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
