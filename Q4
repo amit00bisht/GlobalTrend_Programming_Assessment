@@ -1,4 +1,10 @@
-// Definition for a binary tree node.
+#include <iostream>
+#include <sstream>
+#include <string>
+
+using namespace std;
+
+
 struct TreeNode {
     int val;
     TreeNode *left;
@@ -9,31 +15,57 @@ struct TreeNode {
 class Codec {
 public:
 
-    // Serialize
+ 
     string serialize(TreeNode* root) {
         if (!root) return "X,";
         return to_string(root->val) + "," + serialize(root->left) + serialize(root->right);
     }
 
-    // Deserialize
+  
     TreeNode* deserialize(string data) {
-        queue<string> nodes;
         stringstream ss(data);
-        string val;
-        while (getline(ss, val, ',')) {
-            nodes.push(val);
-        }
-        return deserializeHelper(nodes);
+        return deserializeHelper(ss);
     }
 
 private:
-    TreeNode* deserializeHelper(queue<string>& nodes) {
-        string val = nodes.front();
-        nodes.pop();
+    TreeNode* deserializeHelper(stringstream& ss) {
+        string val;
+        getline(ss, val, ',');
         if (val == "X") return NULL;
         TreeNode* node = new TreeNode(stoi(val));
-        node->left = deserializeHelper(nodes);
-        node->right = deserializeHelper(nodes);
+        node->left = deserializeHelper(ss);
+        node->right = deserializeHelper(ss);
         return node;
     }
 };
+
+void printTree(TreeNode* node) {
+    if (!node) return;
+    cout << node->val << " ";
+    printTree(node->left);
+    printTree(node->right);
+}
+
+int main() {
+    Codec codec;
+
+    TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->right->left = new TreeNode(4);
+    root->right->right = new TreeNode(5);
+
+  
+    string serializedTree = codec.serialize(root);
+    cout << "Serialized tree: " << serializedTree << endl;
+
+
+    TreeNode* deserializedRoot = codec.deserialize(serializedTree);
+
+  
+    cout << "Deserialized tree: ";
+    printTree(deserializedRoot);
+    cout << endl;
+
+    return 0;
+}
