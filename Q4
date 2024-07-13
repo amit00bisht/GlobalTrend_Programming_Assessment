@@ -1,0 +1,39 @@
+// Definition for a binary tree node.
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+class Codec {
+public:
+
+    // Serialize
+    string serialize(TreeNode* root) {
+        if (!root) return "X,";
+        return to_string(root->val) + "," + serialize(root->left) + serialize(root->right);
+    }
+
+    // Deserialize
+    TreeNode* deserialize(string data) {
+        queue<string> nodes;
+        stringstream ss(data);
+        string val;
+        while (getline(ss, val, ',')) {
+            nodes.push(val);
+        }
+        return deserializeHelper(nodes);
+    }
+
+private:
+    TreeNode* deserializeHelper(queue<string>& nodes) {
+        string val = nodes.front();
+        nodes.pop();
+        if (val == "X") return NULL;
+        TreeNode* node = new TreeNode(stoi(val));
+        node->left = deserializeHelper(nodes);
+        node->right = deserializeHelper(nodes);
+        return node;
+    }
+};
