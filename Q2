@@ -1,0 +1,15 @@
+int lost(string s) {
+    unordered_map<char, int> charIndexMap;
+    int maxLength = 0, windowStart = 0;
+
+    for (int windowEnd = 0; windowEnd < s.length(); windowEnd++) {
+        char rightChar = s[windowEnd];
+        if (charIndexMap.find(rightChar)!= charIndexMap.end()) {
+            windowStart = max(windowStart, charIndexMap[rightChar] + 1);
+        }
+        charIndexMap[rightChar] = windowEnd;
+        maxLength = max(maxLength, windowEnd - windowStart + 1);
+    }
+
+    return maxLength;
+}
