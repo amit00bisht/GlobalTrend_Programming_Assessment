@@ -1,16 +1,21 @@
- int maxDiff(vector<int>& nums) {
-        if (nums.empty()) {
-            return 0;
-        }
-        int minElement = nums[0];
-        int maxDiff = nums[0] - nums[0];
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[i] - minElement > maxDiff) {
-                maxDiff = nums[i] - minElement;
-            }
-            if (nums[i] < minElement) {
-                minElement = nums[i];
-            }
-        }
-        return maxDiff;
+#include <iostream>
+#include <algorithm>
+
+int maxDifference(int arr[], int n) {
+    int max = *std::max_element(arr, arr + n);
+    int min = *std::min_element(arr, arr + n);
+    return max - min;
+}
+
+int main() {
+    int n;
+    std::cout << "Enter the number of elements: ";
+    std::cin >> n;
+    int arr[n];
+    std::cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        std::cin >> arr[i];
+    }
+    std::cout << "Maximum difference is: " << maxDifference(arr, n) << std::endl;
+    return 0;
 }
